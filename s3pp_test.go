@@ -52,7 +52,7 @@ func TestConditions(t *testing.T) {
 		{Any("key"), "key", ""},
 		{StartsWith("key", "attachments/"), "key", "attachments/"},
 		{Match("key", "file.zip"), "key", "file.zip"},
-		{Range("content-length-range", 1, 1000), "content-length-range", "1"},
+		{ContentLengthRange(1, 1000), "content-length-range", ""},
 	}
 	for _, c := range cases {
 		if c.cond.Name() != c.name {
@@ -74,5 +74,19 @@ func TestGeneratedConditonsAddedToFields(t *testing.T) {
 		if _, ok := form.Fields[field]; !ok {
 			t.Errorf("Fields missing expected key %q", field)
 		}
+	}
+}
+
+func TestContentLengthRangeExcludedFromFields(t *testing.T) {
+	form, err := New(Config{
+		Key:        Any("key"),
+		Conditions: []Condition{ContentLengthRange(0, 100)},
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if _, ok := form.Fields["content-length-range"]; ok {
+		t.Errorf("content-length-range shouldn't be included in the form fields")
 	}
 }

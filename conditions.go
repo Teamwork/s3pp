@@ -1,9 +1,6 @@
 package s3pp
 
-import (
-	"encoding/json"
-	"strconv"
-)
+import "encoding/json"
 
 type Condition interface {
 	Name() string
@@ -28,10 +25,10 @@ func Any(field string) Condition {
 	return startsWithCondition{field, ""}
 }
 
-// Range returns a condition where field must be int eh range of min and max.
-// Fields created from this Condition return min from Value.
-func Range(field string, min, max int) Condition {
-	return rangeCondition{field, min, max}
+// ContentLengthRange specifies the minimum and maximum allowable size for the uploaded content.
+// This condition is excluded from Fields.
+func ContentLengthRange(min, max int64) Condition {
+	return contentLengthRangeCondition{min, max}
 }
 
 type startsWithCondition struct {
@@ -66,19 +63,19 @@ func (c matchCondition) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]string{c.name: c.value})
 }
 
-type rangeCondition struct {
-	name     string
-	min, max int
+type contentLengthRangeCondition struct {
+	min int64
+	max int64
 }
 
-func (c rangeCondition) MarshalJSON() ([]byte, error) {
-	return json.Marshal([]interface{}{c.name, c.min, c.max})
+func (c contentLengthRangeCondition) MarshalJSON() ([]byte, error) {
+	return json.Marshal([]interface{}{c.Name(), c.min, c.max})
 }
 
-func (c rangeCondition) Name() string {
-	return c.name
+func (c contentLengthRangeCondition) Name() string {
+	return "content-length-range"
 }
 
-func (c rangeCondition) Value() string {
-	return strconv.Itoa(c.min)
+func (c contentLengthRangeCondition) Value() string {
+	return ""
 }

@@ -61,6 +61,7 @@ func New(c Config) (*Form, error) {
 	}
 	fields["policy"] = policy
 	fields["x-amz-signature"] = signPolicy(policy, signing)
+	delete(fields, "content-length-range")
 
 	return &Form{Action: bucketURL(c.Bucket), Fields: fields}, nil
 }

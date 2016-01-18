@@ -39,6 +39,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		Conditions: []s3pp.Condition{
 			s3pp.Match("acl", "public-read"),
 			s3pp.Match("success_action_status", "201"),
+			s3pp.ContentLengthRange(1, 55000),
 		},
 	})
 	if err != nil {

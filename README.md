@@ -18,6 +18,7 @@ form, err := s3pp.New(s3pp.Config{
         Conditions: []s3pp.Condition{
                 s3pp.Match("acl", "public-read"),
                 s3pp.Match("success_action_status", "201"),
+                s3pp.ContentLengthRange(1, 55000),
         },
 })
 ```
