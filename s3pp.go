@@ -1,3 +1,5 @@
+// Package s3pp creates POST policies for uploading files directly to Amazon S3. 
+// See: http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
 package s3pp
 
 import (
