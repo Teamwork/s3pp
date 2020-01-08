@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Teamwork/s3pp.svg?branch=master)](https://travis-ci.org/Teamwork/s3pp)
+[![Build Status](https://travis-ci.com/Teamwork/s3pp.svg?branch=master)](https://travis-ci.com/Teamwork/s3pp)
 # s3pp
 
 A package to help you create [POST policies](http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html) to upload files directly to Amazon S3, see the [AWS docs](http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-UsingHTTPPOST.html) for the all the available conditions and values.
